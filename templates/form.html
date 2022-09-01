@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title%}Formulario{% endblock %}
+
+{% block content %}
+{{ super() }}
+<h1>Complete el formulario:</h1>
+<form method="POST" action="/form">
+    <input type="text" name="name">
+    <input type="text" name="location">
+    <input type="submit" value="enviar">
+</form>
+{% endblock %}

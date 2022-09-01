@@ -3,6 +3,9 @@ import sqlite3
 
 app = Flask(__name__)
 
+app.config['DEBUG'] = True
+app.config['SECRET_KEY'] = 'secretsecretsecret'
+
 @app.route('/')
 def index():
     return '<h1>Hello, World!</h1>'
@@ -10,11 +13,16 @@ def index():
 @app.route('/home', methods=['GET', 'POST'], defaults={'name': 'Default'})
 @app.route('/home/<string:name>', methods=['GET', 'POST'])
 def home(name):
-    return f'<h2>Hola, {name}, esta es la página principal</h2>'
+    session['name'] = name
+    return render_template('home.html', name=name, display=False, mylist=["uno", "dos", "tres", "cuatro"])
 
 @app.route('/json')
 def json():
-    return jsonify({'key': 'value', 'listkey': [1,2,3]})
+    if 'name' in session:
+        name = session['name']
+    else:
+        name = 'NotInSession'
+    return jsonify({'key': 'value', 'listkey': [1,2,3], 'name': name})
 
 @app.route('/query')
 def query():
@@ -22,21 +30,17 @@ def query():
     location = request.args.get('location')
     return f'<h1>{name}, estás en la página de query, desde {location}</h1>'
 
-@app.route('/form')
+@app.route('/form', methods=['GET', 'POST'])
 def form():
-    return '''<form method="POST" action="/process">
-    <input type="text" name="name">
-    <input type="text" name="location">
-    <input type="submit" value="enviar">
-    </form>'''
+    if request.method == 'GET':
+        return render_template('form.html')
 
-@app.route('/process', methods=['POST'])
-def process():
-    name = request.form['name']
-    location = request.form['location']
+    else:
+        name = request.form['name']
+        location = request.form['location']
 
-    return f'<h2>Hola, {name}, eres de {location}, el formulario se envió exitosamente.</h2>'
-
+        #return f'<h2>Hola, {name}, eres de {location}, el formulario se envió exitosamente.</h2>'
+        return redirect(url_for('home', name=name, location=location))
 
 if __name__ == '__main__':
     app.run()

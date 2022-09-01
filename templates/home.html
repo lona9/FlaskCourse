@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Página principal{% endblock %}
+
+{% block content %}
+<h1>Hola {{ name }}, estás en la página principal</h1>
+{% if display %}
+<h2>esto está siendo mostrado</h2>
+{% else %}
+<h2>esto no está siendo mostrado</h2>
+{% endif %}
+
+{% for x in mylist %}
+<h3>{{ x }}</h3>
+{% endfor %}
+
+<img src="{{ url_for('static', filename='cherry-blossom-tree.jpg') }}" width="600" height="400">
+{% include "include_this.html" %}
+{% endblock %}
