@@ -4,6 +4,12 @@
 
 {% block content %}
 <h1>Hola {{ name }}, estás en la página principal</h1>
+
+<h1>Database Results</h1>
+{% for item in results %}
+<h2>ID: {{ item.id }} Name: {{ item.name }} Location: {{ item.location }}</h2>
+{% endfor %}
+
 {% if display %}
 <h2>esto está siendo mostrado</h2>
 {% else %}
