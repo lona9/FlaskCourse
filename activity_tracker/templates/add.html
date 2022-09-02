@@ -43,34 +43,37 @@
 
             <div class="panel-body">
 
-              <form method="POST" action="/">
+              <form method="POST" action="{{ url_for('add')}}">
                 <div class="form-group">
                   <label for="activity-name">Activity Name</label>
-                  <input type="text" class="form-control" id="activity-name" placeholder="Activity Name">
+                  <input type="text" class="form-control" id="activity-name" name="activity-name" placeholder="Activity Name">
                 </div>
                 <div class="form-group">
                   <label for="time">Time</label>
-                  <input type="number" class="form-control" id="time" placeholder="Time">
+                  <input type="number" step="any" class="form-control" id="time" name="time" placeholder="Time">
                 </div>
                 <div class="form-group">
                   <label for="distance">Distance</label>
-                  <input type="number" class="form-control" id="distance" placeholder="Distance">
+                  <input type="number" step="any" class="form-control" id="distance" name="distance" placeholder="Distance">
                 </div>
                 <div class="form-group">
                   <label for="Calories">Calories</label>
-                  <input type="number" class="form-control" id="calories" placeholder="Calories">
+                  <input type="number" class="form-control" id="calories" name="calories" placeholder="Calories">
                 </div>
                 <button type="submit" class="btn btn-primary">Add</button>
               </form>
 
               <div class="page-header"></div>
 
+              {% for activity in results %}
               <ul class="nav nav-pills" role="tablist">
-                <li class="active"><a>Walking</a></li>
-                <li><a>Time: <span class="badge">21</span></a></li>
-                <li><a>Distance: <span class="badge">1.54</span></a></li>
-                <li><a>Calories: <span class="badge">108</span></a></li>
+                <li class="active"><a>{{ activity.name }}</a></li>
+                <li><a>Time: <span class="badge">{{ activity.time }}</span></a></li>
+                <li><a>Distance: <span class="badge">{{ activity.distance }}</span></a></li>
+                <li><a>Calories: <span class="badge">{{ activity.calories }}</span></a></li>
               </ul>
+              <div class="page-header"></div>
+              {% endfor %}
             </div>
 
           </div>
